@@ -3,12 +3,12 @@
         <el-col :span="16" style="background:white;height:100%;">
             <el-tabs id="scanPrintTabs" v-model="activeName" @tab-click="handleClick" stretch="true">
                 <el-tab-pane name="first">
-                    <span slot="label" class="tabHeader">待寄 <span class="circle" v-bind:style="{background:backcolor1}">{{waitDeliverCount}}</span></span>
-                    <router-view></router-view>
+                    <span slot="label" class="tabHeader">待寄 <span class="circle" v-bind:style="{background:backcolor1}">{{waitDeliverList.length}}</span></span>
+                    <router-view :dataList="waitDeliverList" funcName="称重打印" emptyText="暂无数据！<br/>请输入寄件人手机号码查询" emptyImg="/static/暂无数据插画@2x.png"></router-view>
                 </el-tab-pane>
                 <el-tab-pane name="second">
-                    <span slot="label" class="tabHeader">已寄 <span class="circle" v-bind:style="{background:backcolor2}">{{deliveredCount}}</span></span>
-                    <router-view></router-view>
+                    <span slot="label" class="tabHeader">已寄 <span class="circle" v-bind:style="{background:backcolor2}">{{deliveredList.length}}</span></span>
+                    <router-view :dataList="deliveredList" funcName="重新打印" emptyText="暂无相关运单信息" emptyImg="/static/无运单信息插画@2x.png"></router-view>
                 </el-tab-pane>
             </el-tabs>
             <el-dialog show-close="false" >
@@ -19,37 +19,49 @@
         </el-col>
         <el-col :span="8" style="height:100%;">
             <div id="phonePanel">
-                <el-input v-model="mobileNo"></el-input>
-                <div class="number" style="grid-area:num1;"><span>1</span></div>
-                <div class="number" style="grid-area:num2;"><span>2</span></div>
-                <div class="number" style="grid-area:num3;"><span>3</span></div>
-                <div class="number" style="grid-area:num4;"><span>4</span></div>
-                <div class="number" style="grid-area:num5;"><span>5</span></div>
-                <div class="number" style="grid-area:num6;"><span>6</span></div>
-                <div class="number" style="grid-area:num7;"><span>7</span></div>
-                <div class="number" style="grid-area:num8;"><span>8</span></div>
-                <div class="number" style="grid-area:num9;"><span>9</span></div>
-                <div class="number" style="grid-area:num0;"><span>0</span></div>
-                <div class="clear" style="grid-area:clear;"><span>清空</span></div>
-                <div class="del" style="grid-area:del;"></div>
-                <el-button type="primary">查询</el-button>
+                <el-input v-model="mobileNo" placeholder="请输入手机号或运单号查询" :class="{placeHolder: isUse}"></el-input>
+                <div class="number" @click="mobileNo+=num1; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num1;"><span>{{num1}}</span></div>
+                <div class="number" @click="mobileNo+=num2; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num2;"><span>{{num2}}</span></div>
+                <div class="number" @click="mobileNo+=num3; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num3;"><span>{{num3}}</span></div>
+                <div class="number" @click="mobileNo+=num4; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num4;"><span>{{num4}}</span></div>
+                <div class="number" @click="mobileNo+=num5; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num5;"><span>{{num5}}</span></div>
+                <div class="number" @click="mobileNo+=num6; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num6;"><span>{{num6}}</span></div>
+                <div class="number" @click="mobileNo+=num7; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num7;"><span>{{num7}}</span></div>
+                <div class="number" @click="mobileNo+=num8; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num8;"><span>{{num8}}</span></div>
+                <div class="number" @click="mobileNo+=num9; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num9;"><span>{{num9}}</span></div>
+                <div class="number" @click="mobileNo+=num0; if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:num0;"><span>{{num0}}</span></div>
+                <div class="clear" @click="mobileNo=''; isUse=true;" style="grid-area:clear;"><span>清空</span></div>
+                <div class="del" @click="mobileNo=mobileNo.slice(0,-1); if (mobileNo != '') isUse=false; else isUse=true" style="grid-area:del;"></div>
+                <el-button type="primary" @click="queryAction">查询</el-button>
             </div>
         </el-col>
     </el-row>
 </template>
 
 <script>
+import ScanPrintMain from './ScanPrintMain.vue'
 export default {
   data () {
     return {
       activeName: 'first',
-      waitDeliverCount: 1,
-      deliveredCount: 3,
       backcolor1: 'rgba(170,53,255,1)',
       backcolor2: 'rgba(102,102,102,1)',
       selectedCount: 1,
-      mobileNo: '199999999999',
       isShow: true,
+      mobileNo: '',
+      num1: 1,
+      num2: 2,
+      num3: 3,
+      num4: 4,
+      num5: 5,
+      num6: 6,
+      num7: 7,
+      num8: 8,
+      num9: 9,
+      num0: 0,
+      waitDeliverList: [],
+      deliveredList: [],
+      isUse: true
     }
   },
   methods: {
@@ -61,6 +73,44 @@ export default {
         this.backcolor1 = 'rgba(102,102,102,1)'
         this.backcolor2 = 'rgba(170,53,255,1)'
       }
+    },
+    numClick (event) {
+    },
+    queryAction () {
+      if (this.mobileNo === '') {
+      } else {
+        this.waitDeliverList = [{
+          wayBillNo: '80000000000',
+          consigneeAndMobile: '测试 19999999999',
+          consigneeAddress: '深圳市宝安区西乡街道yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',
+          commodity: '樱桃',
+          number: '322'
+        }, {
+          wayBillNo: '80000000000',
+          consigneeAndMobile: '测试 19999999999',
+          consigneeAddress: '深圳市宝安区西乡街道xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          commodity: '樱桃',
+          number: '322'
+        }
+        ]
+        this.deliveredList = [{
+          wayBillNo: '80000000000',
+          consigneeAndMobile: '测试 19999999999',
+          consigneeAddress: '深圳市宝安区西乡街道zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+          commodity: '樱桃',
+          number: '322'
+        }, {
+          wayBillNo: '80000000000',
+          consigneeAndMobile: '测试 19999999999',
+          consigneeAddress: '深圳市宝安区西乡街道xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          commodity: '樱桃',
+          number: '322'
+        }
+        ]
+      }
+    },
+    components: {
+      'scanPrintMain': ScanPrintMain
     }
   }
 }
@@ -152,6 +202,14 @@ export default {
 
     .el-input__inner {
         height:90px !important;
+    }
+
+    #phonePanel .placeHolder {
+        font-size:21px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(102,102,102,1);
+        line-height:29px;
     }
 
      #phonePanel>div {

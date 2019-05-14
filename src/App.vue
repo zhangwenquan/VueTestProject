@@ -1,14 +1,14 @@
 <template>
   <el-container id="app">
     <el-aside id="aside">
-      <el-menu style="list-style:none;" collapse="false" background-color="transparent" text-color="rgba(255,255,255,1)">
-         <el-submenu  index="1" style="margin-top:19px;"><template slot="title"><img src="./assets/形状 2@2x.png" /></template></el-submenu>
-         <el-submenu  index="2" style="height:156px;"><template slot="title"><img src="./assets/扫码打印@2x.png" /><span class="menutext">扫码打印</span></template></el-submenu>
-         <el-submenu index="3" style=""><template slot="title"><img src="./assets/查询打印@2x.png" /><span class="menutext">查询打印</span></template></el-submenu>
-         <el-submenu index="4" style=""><template slot="title"><img src="./assets/我的报表@2x.png" /><span class="menutext">异常单据</span></template></el-submenu>
-         <el-submenu index="5"  style=""><template slot="title"><img src="./assets/异常@2x.png"/><span class="menutext">我的报表</span></template></el-submenu>
-         <el-submenu index="6" style=""><template slot="title"><img src="./assets/设置@2x.png" /></template></el-submenu>
-         <el-submenu index="7" style=""><template slot="title"><img src="./assets/关闭@2x.png" /></template></el-submenu>
+      <div style="height:18%;margin-top:19px;margin-bottom:60px;"><img src="./assets/形状 2@2x.png" /></div>
+      <el-menu id="menu" :default-active="$route.path" collapse="false" router>
+         <el-submenu index="1" style="flex: 1" ><template slot="title"><img src="./assets/扫码打印@2x.png" /><div>扫码打印</div></template></el-submenu>
+         <el-submenu index="2" @click="bg='rgba(213,119,255,1)'" v-bind:style="{ background:bg }" style="flex: 1" ><template slot="title"><img src="./assets/查询打印@2x.png" /><div>查询打印</div></template></el-submenu>
+         <el-submenu index="3" style="flex: 1"><template slot="title"><img src="./assets/我的报表@2x.png" /><div>异常单据</div></template></el-submenu>
+         <el-submenu index="4"  style="flex: 1"><template slot="title"><img src="./assets/异常@2x.png"/><div>我的报表</div></template></el-submenu>
+         <el-submenu index="5" style="flex: 0;height:80px;margin-top:60px;"><template slot="title"><img src="./assets/设置@2x.png" /></template></el-submenu>
+         <el-submenu index="6" style="flex: 0;height:80px;"><template slot="title"><img src="./assets/关闭@2x.png" /></template></el-submenu>
       </el-menu>
     </el-aside>
     <el-container id="container">
@@ -21,7 +21,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      bg: 'rgba(213,119,255,1)'
+    }
+  }
 }
 </script>
 
@@ -39,10 +44,18 @@ export default {
 }
 
 #aside {
-  /* flex:0 0 200px; */
-  /* width:140px; */
+  display:flex;
+  flex-flow:column;
   height: 100%;
   background:linear-gradient(180deg,rgba(149,33,255,1) 0%,rgba(164,23,255,1) 100%);
+}
+
+#menu {
+  display:flex;
+  flex-flow: column;
+  list-style:none;
+  background-color:transparent;
+  border:0px;
 }
 
 #container{
@@ -51,33 +64,29 @@ export default {
 
 .el-menu{
   height:100%;
-  width:99%;
+  width:100%;
 }
 
-.el-submenu{
-  height:106px;
+.el-submenu__title div{
+  margin-top:10px;
 }
 
 .el-submenu__title{
-  padding-left:0px;
-  height:100%;
-  color:rgba(255,255,255,1);
+  height:100% !important;
   font-size:16px;
-  font-family:PingFangSC-Medium;
-  font-weight:500;
-  color: #303133;
-  padding: 0 0px;
-  cursor: pointer;
-  -webkit-transition: border-color .3s,background-color .3s,color .3s;
-  transition: border-color .3s,background-color .3s,color .3s;
-  -webkit-box-sizing:unset;
-  box-sizing:unset;
-
+  font-family:PingFangSC-Medium!important;
+  font-weight:500!important;
+  color:rgba(255,255,255,1)!important;
+  line-height:22px!important;
+  cursor: pointer!important;
 }
 
-.menutext{
-  display:block;
-  color:rgba(255,255,255,1);
+.el-submenu__title:hover,.el-submenu__title.click {
+  background:rgba(213,119,255,1) !important;
+  opacity:1 !important;
 }
 
+.el-menu--vertical{
+  display:none !important;
+}
 </style>

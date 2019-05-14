@@ -1,9 +1,9 @@
 <template>
     <el-container style="height:100%;display:flex; flex-direction: column;justify-content: space-between;">
-      <el-table id="waitDeliverList" :data="waitDeliverPage">
+      <el-table id="waitDeliverList" :data="dataList" @selection-change="selectionChanged">
           <template slot="empty">
               <div>
-                <img src="../assets/无运单信息插画@2x.png" /><p>暂无相关运单信息</p>
+                <img :src="emptyImg" /><p><span v-html="emptyText"></span></p>
               </div>
           </template>
           <el-table-column type="selection"></el-table-column>
@@ -15,34 +15,26 @@
       </el-table>
       <div class="buttonLine">
         <span>已选：<span style="color:red;">{{selectedCount}}</span>票</span>
-        <el-button type="primary">重新打印</el-button>
+        <el-button type="primary">{{funcName}}</el-button>
       </div>
     </el-container>
 </template>
 
 <script>
 export default {
+  props: ['dataList', 'funcName', 'emptyText', 'emptyImg'],
   data () {
     return {
-      waitDeliverPage: [{
-        wayBillNo: '80000000000',
-        consigneeAndMobile: '测试 19999999999',
-        consigneeAddress: '深圳市宝安区西乡街道xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        commodity: '樱桃',
-        number: '322'
-      }, {
-        wayBillNo: '80000000000',
-        consigneeAndMobile: '测试 19999999999',
-        consigneeAddress: '深圳市宝安区西乡街道xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        commodity: '樱桃',
-        number: '322'
-      }
-      ],
-      selectedCount: 1
+      selectedCount: 0,
+      multipleSelection: []
     }
   },
   methods: {
     reprint () {
+    },
+    selectionChanged (selection) {
+      this.multipleSelection = selection
+      this.selectedCount = selection.length
     }
   }
 }
