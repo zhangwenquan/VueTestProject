@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style>
-    #waitDeliverList,.el-table--fit {
+    #waitDeliverList {
         display:flex;
         flex-flow: column;
         flex: 1 2;
@@ -76,11 +76,11 @@ export default {
         /* border-bottom:1px solid rgba(208,212,222,1); */
     }
 
-    .el-table::before {
+    #waitDeliverList .el-table::before {
       height:0px !important;
     }
 
-    .el-table__header {
+    #waitDeliverList .el-table__header {
         font-size:18px  !important;
         font-family:PingFangSC-Medium  !important;
         font-weight:500  !important;
@@ -88,7 +88,7 @@ export default {
         line-height:25px  !important;
     }
 
-    .el-table__body {
+    #waitDeliverList .el-table__body {
         font-size:18px  !important;
         font-family:PingFangSC-Regular  !important;
         font-weight:400  !important;
@@ -102,16 +102,16 @@ export default {
       border-collapse: collapse  !important;
     }
 
-    .el-table th {
+    #waitDeliverList.el-table th {
         border-right:1px solid rgba(208,212,222,1)  !important;
         background:rgba(221,225,235,1)  !important;
     }
 
-    .el-table__body-wrapper{
+    #waitDeliverList .el-table__body-wrapper {
       height:100% !important;
     }
 
-    .el-table__empty-block {
+    #waitDeliverList .el-table__empty-block {
         display:flex !important;
         flex-flow: column !important;
         justify-content: center !important;
@@ -123,38 +123,38 @@ export default {
         line-height:30px;
     }
 
-    .el-checkbox__input.is-checked .el-checkbox__inner {
+    #waitDeliverList .el-checkbox__input.is-checked .el-checkbox__inner {
         background: rgba(170,53,255,1)  !important;
         border-color:rgba(170,53,255,1)  !important;
         vertical-align: middle  !important;
     }
 
-    .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    #waitDeliverList .el-checkbox__input.is-indeterminate .el-checkbox__inner {
       background: rgba(170,53,255,1)  !important;
       border-color:rgba(170,53,255,1)  !important;
     }
 
-    .el-checkbox__inner {
+    #waitDeliverList .el-checkbox__inner {
       width:22px  !important;
       height:22px  !important;
     }
 
-    .el-checkbox__inner:after{
+    #waitDeliverList .el-checkbox__inner:after{
       margin:3px 0px 0px 3px  !important;
       vertical-align: middle  !important;
     }
 
-    .el-checkbox__inner:before{
+    #waitDeliverList .el-checkbox__inner:before{
       margin-top:3px  !important;
       vertical-align: middle  !important;
     }
 
-    .buttonLine {
+    .el-container .buttonLine {
       border-top:1px solid rgba(208,212,222,1);
       height:98px;
     }
 
-    .buttonLine > .el-button {
+    .el-container .buttonLine > .el-button {
       float:right;
       background: rgba(241,136,0,1) !important;
       width:230px;
@@ -168,7 +168,7 @@ export default {
       line-height:45px;
       border:0px;
     }
-    .buttonLine > span {
+    .el-container .buttonLine > span {
       width:115px;
       height:100px;
       font-size:26px;

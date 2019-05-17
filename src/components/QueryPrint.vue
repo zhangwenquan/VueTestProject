@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import ScanPrintMain from './ScanPrintMain.vue'
+import ScanPrintMain from './QueryPrintMain.vue'
 export default {
   data () {
     return {
@@ -125,11 +125,11 @@ export default {
         border:1px solid rgba(208,212,222,1)  !important;
     }
 
-    .el-tabs__content,.el-tab-pane {
+    #scanPrintTabs .el-tabs__content,.el-tab-pane {
       height:100% !important;
     }
 
-    .tabHeader{
+    #scanPrintTabs .tabHeader{
         width:52px;
         height:74px;
         font-size:26px;
@@ -149,19 +149,19 @@ export default {
         color: white;
     }
 
-    .el-tabs__item {
+    #scanPrintTabs .el-tabs__item {
         height: 74px !important;
     }
 
-    .el-tabs__item.is-top {
+    #scanPrintTabs .el-tabs__item.is-top {
         color:rgba(102,102,102,1) !important;
     }
 
-    .el-tabs__item.is-active {
+    #scanPrintTabs .el-tabs__item.is-active {
         color:rgba(170,53,255,1) !important;
     }
 
-    .el-tabs__active-bar {
+    #scanPrintTabs .el-tabs__active-bar {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -196,7 +196,7 @@ export default {
         line-height:48px;
     }
 
-    .el-input__inner {
+    #phonePanel .el-input__inner {
         height:90px !important;
     }
 
